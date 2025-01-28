@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.eldar</groupId>
-	<artifactId>person-service</artifactId>
+	<artifactId>sales-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>person-service</name>
+	<name>sales-service</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
