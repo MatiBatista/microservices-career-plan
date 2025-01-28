@@ -12,7 +12,7 @@
         <module name="eureka-server" />
         <module name="gateway" />
       </profile>
-      <profile name="Annotation profile for sales-service" enabled="true">
+      <profile name="Annotation profile for persons-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -22,11 +22,14 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
+        <module name="persons-service" />
         <module name="products-service" />
         <module name="sales-service" />
-        <module name="person-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="person-service" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -35,6 +38,7 @@
       <module name="eureka-server" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="person-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="persons-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="products-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="sales-service" options="-parameters -Amapstruct.defaultComponentModel=spring" />
     </option>
