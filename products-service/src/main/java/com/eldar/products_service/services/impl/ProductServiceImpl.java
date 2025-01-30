@@ -28,7 +28,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponseDTO> getAll() {
         return productRepository.findAll().stream().map(productMapper::toResponseDTO).toList();
-
     }
 
     @Override
@@ -53,6 +52,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void delete(Long id) {
-
+        if (!productRepository.existsById(id)) {
+            throw new NotFoundException("Product not found with id: " + id);
+        }
+        productRepository.deleteById(id);
     }
 }

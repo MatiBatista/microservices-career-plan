@@ -36,12 +36,12 @@ public abstract class ProductMapper {
 
     @Named("mapIdToCategory")
     public Category mapIdToCategory(Long categoryId) {
-        return categoryService.getById(categoryId);
+        return categoryService.getCategoryById(categoryId);
     }
 
     @Named("mapIdToBrand")
     public Brand mapIdToBrand(Long brandId) {
-        return brandService.getById(brandId);
+        return brandService.getBrandById(brandId);
     }
 
     @Named("mapCategoryToName")
