@@ -10,6 +10,7 @@ import com.eldar.products_service.services.contracts.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class CategoryController {
     @Operation(summary = "Add category", description = "Add a new category")
     public ResponseEntity<Void> add(@Valid @RequestBody CategoryRequestDTO categoryRequestDTO){
         categoryService.add(categoryRequestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 

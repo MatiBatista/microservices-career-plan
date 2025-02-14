@@ -10,13 +10,14 @@ import com.eldar.person_service.services.contracts.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/employes")
+@RequestMapping("/employees")
 @RequiredArgsConstructor
 public class EmployeeController {
 
@@ -38,7 +39,7 @@ public class EmployeeController {
     @Operation(summary = "Add employee", description = "Add a new employee")
     public ResponseEntity<Void> add(@Valid @RequestBody EmployeeRequestDTO employeeRequestDTO){
         employeeService.add(employeeRequestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 

@@ -6,6 +6,7 @@ import com.eldar.products_service.services.contracts.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,14 +35,28 @@ public class ProductController {
     @Operation(summary = "Add product", description = "Add a new product")
     public ResponseEntity<Void> add(@Valid @RequestBody ProductRequestDTO productRequestDTO){
         productService.add(productRequestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update product", description = "Update an existing customer")
+    @Operation(summary = "Update product", description = "Update an existing product")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ProductRequestDTO productRequestDTO){
         productService.update(id,productRequestDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/sell/{id}")
+    @Operation(summary = "Sell product", description = "Sell an existing product")
+    public ResponseEntity<Void> sell(@PathVariable Long id, @RequestParam int quantity ){
+        productService.sell(id,quantity);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/revertStock/{id}")
+    @Operation(summary = "Revert stock product", description = "Revert stock for product")
+    public ResponseEntity<Void> revertStock(@PathVariable Long id, @RequestParam int quantity){
+        productService.revertStock(id,quantity);
         return ResponseEntity.ok().build();
     }
 

@@ -1,14 +1,11 @@
 package com.eldar.person_service.services.impl;
 
-import com.eldar.person_service.dtos.request.CustomerRequestDTO;
 import com.eldar.person_service.dtos.request.EmployeeRequestDTO;
-import com.eldar.person_service.dtos.response.CustomerResponseDTO;
 import com.eldar.person_service.dtos.response.EmployeeResponseDTO;
 import com.eldar.person_service.exceptions.customs.BadRequestException;
 import com.eldar.person_service.exceptions.customs.NotFoundException;
 import com.eldar.person_service.mappers.EmployeeMapper;
 import com.eldar.person_service.models.Employee;
-import com.eldar.person_service.models.Person;
 import com.eldar.person_service.repositories.EmployeeRepository;
 import com.eldar.person_service.services.contracts.EmployeeService;
 import jakarta.transaction.Transactional;

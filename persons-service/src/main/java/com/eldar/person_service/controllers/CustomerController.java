@@ -7,6 +7,7 @@ import com.eldar.person_service.services.contracts.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class CustomerController {
     @Operation(summary = "Add customer", description = "Add a new customer")
     public ResponseEntity<Void> add(@Valid @RequestBody CustomerRequestDTO customerRequestDTO){
         customerService.add(customerRequestDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 

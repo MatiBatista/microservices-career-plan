@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "details")
 @SQLDelete(sql = " UPDATE details SET deleted_at= current_timestamp WHERE id=?")
@@ -28,6 +30,12 @@ public class Detail {
 
     @Column(nullable = false)
     private Integer quantity;
+
+    @Column(nullable = false, scale = 2)
+    private BigDecimal subtotal;
+
+    @Column(nullable = false, scale = 2)
+    private BigDecimal totalAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Sale sale;

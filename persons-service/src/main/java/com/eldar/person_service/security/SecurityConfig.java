@@ -36,7 +36,6 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/login-with-oauth/**"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
                 new AntPathRequestMatcher("/v3/api-docs/**"),
-                new AntPathRequestMatcher("/employes/**"),
         };
         jwtTokenFilter.setPublicRoutes(publicRoutes);
         return http

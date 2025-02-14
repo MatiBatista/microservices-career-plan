@@ -2,14 +2,11 @@ package com.eldar.products_service.services.impl;
 
 import com.eldar.products_service.dtos.requests.ProductRequestDTO;
 import com.eldar.products_service.dtos.responses.ProductResponseDTO;
+import com.eldar.products_service.exceptions.customs.BadRequestException;
 import com.eldar.products_service.exceptions.customs.NotFoundException;
 import com.eldar.products_service.mappers.ProductMapper;
-import com.eldar.products_service.models.Category;
 import com.eldar.products_service.models.Product;
-import com.eldar.products_service.repositories.CategoryRepository;
 import com.eldar.products_service.repositories.ProductRepository;
-import com.eldar.products_service.services.contracts.BrandService;
-import com.eldar.products_service.services.contracts.CategoryService;
 import com.eldar.products_service.services.contracts.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -57,4 +54,22 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.deleteById(id);
     }
+
+    @Override
+    public void sell(Long id, int quantity) {
+        Product product = productRepository.findById(id).orElseThrow(()->new NotFoundException("Product not found with id: " + id));
+        if(quantity > product.getStock()) {
+            throw new BadRequestException("The quantity of the product " + product.getName() + " is not sufficient");
+        }
+        product.setStock(product.getStock() - quantity);
+        productRepository.save(product);
+    }
+
+    @Override
+    public void revertStock(Long id, int quantity) {
+        Product product = productRepository.findById(id).orElseThrow(()->new NotFoundException("Product not found with id: " + id));
+        product.setStock(product.getStock() + quantity);
+        productRepository.save(product);
+    }
+
 }

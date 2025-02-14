@@ -1,9 +1,10 @@
 package com.eldar.person_service.models;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,16 +14,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
+@EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "persons")
-@Inheritance(strategy = InheritanceType.JOINED)
-@SQLDelete(sql = " UPDATE persons SET deleted_at= current_timestamp WHERE id=?")
+@Table(name = "customers")
+@SQLDelete(sql = " UPDATE customers SET deleted_at= current_timestamp WHERE id=?")
 @SQLRestriction("deleted_at IS NULL")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @SuperBuilder
-public class Person {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

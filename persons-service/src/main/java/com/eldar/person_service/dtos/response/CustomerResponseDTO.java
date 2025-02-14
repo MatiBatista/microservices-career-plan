@@ -18,5 +18,8 @@ public class CustomerResponseDTO {
 
     private String dni;
 
+    protected String email;
+
+    protected String address;
 
 }

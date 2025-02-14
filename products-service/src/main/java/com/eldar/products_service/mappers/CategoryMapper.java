@@ -4,9 +4,11 @@ import com.eldar.products_service.dtos.requests.CategoryRequestDTO;
 import com.eldar.products_service.dtos.requests.ProductRequestDTO;
 import com.eldar.products_service.dtos.responses.CategoryResponseDTO;
 import com.eldar.products_service.dtos.responses.ProductResponseDTO;
+import com.eldar.products_service.exceptions.customs.NotFoundException;
 import com.eldar.products_service.models.Brand;
 import com.eldar.products_service.models.Category;
 import com.eldar.products_service.models.Product;
+import com.eldar.products_service.repositories.CategoryRepository;
 import com.eldar.products_service.services.contracts.CategoryService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class CategoryMapper {
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryRepository categoryRepository;
 
     @Mapping(target = "parentCategory",source = "parentCategoryId", qualifiedByName = "mapIdToParentCategory")
     public abstract Category toEntity(CategoryRequestDTO categoryRequestDTO);
@@ -31,12 +33,15 @@ public abstract class CategoryMapper {
 
     @Named("mapIdToParentCategory")
     public Category mapIdToParentCategory(Long parentCategoryId) {
-        return categoryService.getCategoryById(parentCategoryId);
+        return categoryRepository.findById(parentCategoryId).orElse(null);
     }
 
     @Named("mapParentCategoryToName")
     public String mapParentCategoryToName(Category category) {
-        return category.getName();
+        if(category!= null) {
+            return category.getName();
+        }
+        return null;
     }
 
 

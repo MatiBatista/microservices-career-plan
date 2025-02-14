@@ -1,13 +1,11 @@
 package com.eldar.person_service.services.impl;
 
 import com.eldar.person_service.dtos.request.CustomerRequestDTO;
-import com.eldar.person_service.dtos.request.EmployeeRequestDTO;
 import com.eldar.person_service.dtos.response.CustomerResponseDTO;
 import com.eldar.person_service.exceptions.customs.BadRequestException;
 import com.eldar.person_service.exceptions.customs.NotFoundException;
 import com.eldar.person_service.mappers.CustomerMapper;
-import com.eldar.person_service.models.Employee;
-import com.eldar.person_service.models.Person;
+import com.eldar.person_service.models.Customer;
 import com.eldar.person_service.repositories.CustomerRepository;
 import com.eldar.person_service.services.contracts.CustomerService;
 import jakarta.transaction.Transactional;
@@ -29,7 +27,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerResponseDTO> getAll() {
-        return customerRepository.findAll().stream().map(customerMapper::toResponseDTO).toList();
+        return customerRepository.findAll().stream()
+                .map(customerMapper::toResponseDTO).toList();
     }
 
     @Override
@@ -50,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public void update(Long id, CustomerRequestDTO customerRequestDTO) {
-        Person customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer not found"));
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer not found"));
         validateCustomerRequestUpdate(customer, customerRequestDTO);
         customerMapper.updateEntity(customer, customerRequestDTO);
         customerRepository.save(customer);
@@ -66,12 +65,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     private void validateCustomerRequestAdd(CustomerRequestDTO customerRequestDTO) {
-        Optional<Person> existingCustomer = customerRepository.findByDniOrEmail(
+        Optional<Customer> existingCustomer = customerRepository.findByDniOrEmail(
                 customerRequestDTO.getDni(),
                 customerRequestDTO.getEmail()
         );
         if (existingCustomer.isPresent()) {
-            Person customer = existingCustomer.get();
+            Customer customer = existingCustomer.get();
             if (customer.getDni().equals(customerRequestDTO.getDni())) {
                 throw new BadRequestException("Dni is already in use");
             }
@@ -81,13 +80,13 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    private void validateCustomerRequestUpdate(Person customer,CustomerRequestDTO customerRequestDTO) {
-        Optional<Person> existingCustomer = customerRepository.findByDniOrEmail(
+    private void validateCustomerRequestUpdate(Customer customer,CustomerRequestDTO customerRequestDTO) {
+        Optional<Customer> existingCustomer = customerRepository.findByDniOrEmail(
                 customerRequestDTO.getDni(),
                 customerRequestDTO.getEmail()
         );
         if (existingCustomer.isPresent()) {
-            Person existsCustomer= existingCustomer.get();
+            Customer existsCustomer= existingCustomer.get();
 
             if (existsCustomer.getDni().equals(customerRequestDTO.getDni()) && !Objects.equals(customer.getDni(), customerRequestDTO.getDni())) {
                 throw new BadRequestException("Dni is already in use");
