@@ -12,4 +12,6 @@ import java.util.List;
 public interface DetailRepository extends JpaRepository<Detail, Long> {
 
     public List<Detail> findDetailsBySaleId(Long saleId);
+    public void deleteDetailsBySaleId(Long saleId);
+    public boolean existsDetailsBySaleId(Long saleId);
 }

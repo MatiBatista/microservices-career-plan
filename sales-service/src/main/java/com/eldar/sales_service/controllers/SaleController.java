@@ -44,7 +44,30 @@ public class SaleController {
         return ResponseEntity.ok(saleService.getById(id,authHeader));
     }
 
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete sale", description = "Delete a sale by its id")
+    public ResponseEntity<Void> delete(@PathVariable Long id,HttpServletRequest httpServletRequest){
+        String authHeader=httpServletRequest.getHeader("Authorization");
+        this.saleService.delete(id,authHeader);
+        return ResponseEntity.ok().build();
+    }
 
+
+    @DeleteMapping("/revertStock/{id}")
+    @Operation(summary = "Delete sale", description = "Delete a sale by its id ans revert the stock")
+    public ResponseEntity<Void> deleteWithRevert(@PathVariable Long id,HttpServletRequest httpServletRequest){
+        String authHeader=httpServletRequest.getHeader("Authorization");
+        this.saleService.deleteWithRevert(id,authHeader);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update Sale", description = "Update an existing customer")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody SaleRequestDTO saleRequestDTO,HttpServletRequest httpServletRequest){
+        String authHeader=httpServletRequest.getHeader("Authorization");
+        saleService.update(id,saleRequestDTO,authHeader);
+        return ResponseEntity.ok().build();
+    }
 
     /*
     @GetMapping()
@@ -73,12 +96,7 @@ public class SaleController {
         productService.update(id,productRequestDTO);
         return ResponseEntity.ok().build();
     }
+*/
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete product", description = "Delete a product by its id")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        productService.delete(id);
-        return ResponseEntity.ok().build();
-    } */
 
 }

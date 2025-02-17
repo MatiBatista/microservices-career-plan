@@ -13,4 +13,10 @@ public interface SaleService {
     List<SaleResponseDTOAll> getAll(String authHeader);
 
     SaleResponseDTO getById(Long id,String authHeader);
+
+    void delete(Long id,String authHeader);
+
+    void deleteWithRevert(Long id, String authHeader);
+
+    void update(Long id, SaleRequestDTO saleRequestDTO,String authHeader);
 }

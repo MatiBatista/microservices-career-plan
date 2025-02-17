@@ -1,11 +1,13 @@
 package com.eldar.sales_service.mappers;
 
+import com.eldar.sales_service.dtos.requests.SaleRequestDTO;
 import com.eldar.sales_service.dtos.responses.SaleResponseDTO;
 import com.eldar.sales_service.dtos.responses.SaleResponseDTOAll;
 import com.eldar.sales_service.models.Sale;
 import com.eldar.sales_service.rest_service.dtos.responses.CustomerResponseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
@@ -22,6 +24,7 @@ public abstract class SaleMapper {
 
    // @Mapping(target = "parentCategory",source = "parentCategory", qualifiedByName = "mapParentCategoryToName")
     public abstract SaleResponseDTO toResponseDTO(Sale category);
+
 
    // @Mapping(target = "parentCategory",source = "parentCategoryId", qualifiedByName = "mapIdToParentCategory")
    // public abstract void updateEntity(@MappingTarget Category category, CategoryRequestDTO categoryRequestDTO);
