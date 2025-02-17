@@ -1,4 +1,4 @@
-package com.eldar.products_service.security.components;
+package com.eldar.sales_service.security.components;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

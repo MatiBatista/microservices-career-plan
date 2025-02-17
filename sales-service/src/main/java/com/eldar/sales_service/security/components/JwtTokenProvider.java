@@ -1,4 +1,4 @@
-package com.eldar.products_service.security.components;
+package com.eldar.sales_service.security.components;
 
 
 import io.jsonwebtoken.Claims;
@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
