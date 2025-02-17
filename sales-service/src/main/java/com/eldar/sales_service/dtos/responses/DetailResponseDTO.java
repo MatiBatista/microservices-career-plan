@@ -1,10 +1,15 @@
 package com.eldar.sales_service.dtos.responses;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ *
+ * */
 @Data
+@Builder
 public class DetailResponseDTO {
 
     private String productName;

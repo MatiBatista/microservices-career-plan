@@ -39,8 +39,9 @@ public class SaleController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get sell by id",description = "Get sale by id")
-    public ResponseEntity<SaleResponseDTO> getById(@PathVariable Long id){
-        return ResponseEntity.ok(saleService.getById(id));
+    public ResponseEntity<SaleResponseDTO> getById(@PathVariable Long id,HttpServletRequest httpServletRequest){
+        String authHeader=httpServletRequest.getHeader("Authorization");
+        return ResponseEntity.ok(saleService.getById(id,authHeader));
     }
 
 

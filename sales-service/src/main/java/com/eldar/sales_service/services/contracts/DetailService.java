@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface DetailService {
 
-    List<DetailResponseDTO> getDetailsBySale(Sale sale);
+    List<DetailResponseDTO> getDetailsBySale(Sale sale,String authHeader);
 }

@@ -12,5 +12,5 @@ public interface SaleService {
 
     List<SaleResponseDTOAll> getAll(String authHeader);
 
-    SaleResponseDTO getById(Long id);
+    SaleResponseDTO getById(Long id,String authHeader);
 }

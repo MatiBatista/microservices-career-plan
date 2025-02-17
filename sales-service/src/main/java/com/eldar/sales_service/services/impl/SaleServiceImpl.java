@@ -21,6 +21,7 @@ import com.eldar.sales_service.services.contracts.SaleService;
 import feign.FeignException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -57,6 +58,9 @@ public class SaleServiceImpl implements SaleService {
         }
     }
 
+    /*
+    * no mostrar detalle
+    * **/
     @Override
     public List<SaleResponseDTOAll> getAll( String authHeader) {
         return  saleRepository.findAll().stream().map( s ->
@@ -68,12 +72,25 @@ public class SaleServiceImpl implements SaleService {
     }
 
 
+    /**
+     * meter detalle
+     * */
     @Override
-    public SaleResponseDTO getById(Long id) {
+    public SaleResponseDTO getById(Long id,String authHeader) {
         Sale sale = saleRepository.findById(id).orElseThrow(() -> new BadRequestException("Sale not found"));
-        List<DetailResponseDTO> detailList=detailService.getDetailsBySale(sale);
+        List<DetailResponseDTO> detailList = detailService.getDetailsBySale(sale, authHeader);
+        CustomerResponseDTO customerResponseDTO = this.personClient.getCustomerById(sale.getCustomer_id(), authHeader);
 
-        return null;
+
+        return SaleResponseDTO.builder()
+                .details(detailList)
+                .customer(CustomerResponseDtoToCustomResponse(customerResponseDTO))
+                .id(sale.getId())
+                .date(sale.getDate())
+                .discountAmount(sale.getDiscountAmount())
+                .discountPercentage(sale.getDiscountPercentage())
+                .totalAmount(sale.getTotalAmount())
+                .build();
     }
 
     private void revert(List<Detail> details, String authHeader) {
@@ -135,5 +152,14 @@ public class SaleServiceImpl implements SaleService {
             d.setSale(sale);
             detailRepository.save(d);
         });
+    }
+
+    private SaleResponseDTO.CustomerResponse CustomerResponseDtoToCustomResponse(CustomerResponseDTO customerResponseDTO){
+        return SaleResponseDTO.CustomerResponse.builder()
+                .firstname(customerResponseDTO.getFirstname())
+                .lastname(customerResponseDTO.getLastname())
+                .dni(customerResponseDTO.getDni())
+                .email(customerResponseDTO.getEmail())
+                .address(customerResponseDTO.getAddress()).build();
     }
 }

@@ -44,6 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public void add(CategoryRequestDTO categoryRequestDTO) {
+        categoryMapper.toEntity(categoryRequestDTO);
         categoryRepository.save(categoryMapper.toEntity(categoryRequestDTO));
     }
 

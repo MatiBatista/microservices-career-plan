@@ -1,14 +1,15 @@
 package com.eldar.sales_service.rest_service.dtos.responses;
 
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ProductResponseDTO {
 
     private Long id;
@@ -24,16 +25,18 @@ public class ProductResponseDTO {
     private BrandResponse brand;
 
     @Builder
-    @Getter
-    @Setter
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class CategoryResponse{
         private String name;
         private String parentCategory;
     }
 
     @Builder
-    @Getter
-    @Setter
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class BrandResponse{
         private String name;
     }

@@ -41,7 +41,7 @@ public abstract class ProductMapper {
     public ProductResponseDTO.CategoryResponse mapCategoryToCategoryResponse(Category category) {
         return ProductResponseDTO.CategoryResponse.builder()
                 .name(category.getName())
-                .parentCategory(category.getParentCategory().getName())
+                .parentCategory(category.getParentCategory() != null ? category.getParentCategory().getName() : null)
                 .build();
     }
 

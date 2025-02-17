@@ -1,8 +1,17 @@
 package com.eldar.sales_service.dtos.responses;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class SaleResponseDTOAll {
 
     private Long id;
@@ -17,7 +26,10 @@ public class SaleResponseDTOAll {
 
     private CustomerResponse customer;
 
-
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
     public static class CustomerResponse{
 
         private String firstname;
