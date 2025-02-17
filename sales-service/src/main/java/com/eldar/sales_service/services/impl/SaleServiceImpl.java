@@ -7,6 +7,7 @@ import com.eldar.sales_service.dtos.responses.DetailResponseDTO;
 import com.eldar.sales_service.dtos.responses.SaleResponseDTO;
 import com.eldar.sales_service.dtos.responses.SaleResponseDTOAll;
 import com.eldar.sales_service.exceptions.customs.BadRequestException;
+import com.eldar.sales_service.exceptions.customs.NotFoundException;
 import com.eldar.sales_service.mappers.SaleMapper;
 import com.eldar.sales_service.models.Detail;
 import com.eldar.sales_service.models.Sale;
@@ -93,6 +94,68 @@ public class SaleServiceImpl implements SaleService {
                 .build();
     }
 
+    /**
+     * Eliminacion sin devolucion
+     * */
+    @Override
+    @Transactional
+    public void delete(Long id,String authHeader) {
+        //verificamos la existencia de la venta
+        if(!this.saleRepository.existsById(id))
+            throw new NotFoundException("Sale not found with id: "+id);
+
+        //verificamos la existencia de detalles, si existen las eliminamos
+        if(this.detailRepository.existsDetailsBySaleId(id))
+            this.detailRepository.deleteDetailsBySaleId(id);
+
+
+        //Eliminacion de la venta
+        this.saleRepository.deleteById(id);
+    }
+
+    /**Eliminacion con devolucion, preguntar eficiencia*/
+    @Override
+    @Transactional
+    public void deleteWithRevert(Long id,String authHeader){
+        if(!this.saleRepository.existsById(id))
+            throw new NotFoundException("Sale not found with id: "+id);
+
+        //verificamos la existencia de detalles, si existen, reponemos el stock y eliminamos la venta
+        if(this.detailRepository.existsDetailsBySaleId(id)) {
+            revert(detailRepository.findDetailsBySaleId(id),authHeader);
+            this.detailRepository.deleteDetailsBySaleId(id);
+        }
+
+        //Eliminacion de la venta
+        this.saleRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void update(Long id, SaleRequestDTO saleRequestDTO,String authHeader){
+        if(!this.saleRepository.existsById(id))
+            throw new NotFoundException("Sale not found with id: "+id);
+
+        validateCustomerAndEmployee(saleRequestDTO, authHeader);
+        List<Detail> details = null;
+        try {
+            this.detailRepository.deleteDetailsBySaleId(id);
+            details = processDetails(saleRequestDTO.getDetails_products(), authHeader);
+            Sale sale = createSale(saleRequestDTO, details);
+            sale.setId(id);
+            saveSaleAndDetails(sale, details);
+        }catch (Exception e) {
+            if (details != null) {
+                revert(details, authHeader);
+            }
+            throw e;
+        }
+
+
+    }
+
+
+
     private void revert(List<Detail> details, String authHeader) {
         details.forEach(detail -> productClient.revertStock(detail.getProduct_id(),detail.getQuantity(),authHeader));
     }
@@ -145,6 +208,7 @@ public class SaleServiceImpl implements SaleService {
                 .totalAmount(totalAmount)
                 .build();
     }
+
 
     private void saveSaleAndDetails(Sale sale, List<Detail> details) {
         saleRepository.save(sale);
