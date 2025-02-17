@@ -4,7 +4,9 @@ package com.eldar.person_service.security;
 import com.eldar.person_service.security.components.JwtTokenFilter;
 import com.eldar.person_service.security.exceptions.JwtAccessDeniedHandler;
 import com.eldar.person_service.security.exceptions.JwtAuthenticationEntryPoint;
+import jakarta.ws.rs.HttpMethod;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,14 +37,28 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/login/**"),
                 new AntPathRequestMatcher("/login-with-oauth/**"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
-                new AntPathRequestMatcher("/v3/api-docs/**"),
-                new AntPathRequestMatcher("/employees/**"),
+                new AntPathRequestMatcher("/v3/api-docs/**")
+        };
+        AntPathRequestMatcher[] adminRoutes = new AntPathRequestMatcher[]{
+                new AntPathRequestMatcher("/employees/**", HttpMethod.DELETE),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.DELETE)
+        };
+
+        AntPathRequestMatcher[] userRoutes = new AntPathRequestMatcher[]{
+                new AntPathRequestMatcher("/employees/**", HttpMethod.PUT),
+                new AntPathRequestMatcher("/employees/**", HttpMethod.GET),
+                new AntPathRequestMatcher("/employees/**", HttpMethod.POST),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.PUT),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.GET),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.POST)
         };
         jwtTokenFilter.setPublicRoutes(publicRoutes);
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(publicRoutes).permitAll()
+                        .requestMatchers(adminRoutes).hasAnyAuthority("ADMIN")
+                        .requestMatchers(userRoutes).hasAnyAuthority("ADMIN","USER")
                         .anyRequest().authenticated())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Desactiva sesiones
@@ -52,7 +68,7 @@ public class SecurityConfig {
                         .accessDeniedHandler(jwtAccessDeniedHandler))
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Arrays.asList("http://localhost:7000", "http://localhost:7001"));
+                    config.setAllowedOrigins(Arrays.asList("http://localhost:7000", "http://localhost:7001","http://localhost:8083"));
                     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(Collections.singletonList("*"));
                     return config;
