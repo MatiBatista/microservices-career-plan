@@ -29,6 +29,8 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2023.0.5</spring-cloud.version>
+		<!-- Para hacer que Spring Boot use el perfil de Maven automáticamente, agrega lo siguiente en el pom.xml dentro de <properties>: -->
+		<spring-boot.run.profiles>${profileActive}</spring-boot.run.profiles>
 	</properties>
 	<dependencies>
 		<dependency>
