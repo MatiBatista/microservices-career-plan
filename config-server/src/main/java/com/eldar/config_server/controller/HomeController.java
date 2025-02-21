@@ -14,7 +14,9 @@ public class HomeController {
     @GetMapping
     public String home() {
 
-        log.info("Prueba de log");
+        log.info("START - getAllCustomers");
+        log.info("END - getAllCustomers");
         return "Bienvenido al ConfigServer";
+
     }
 }
