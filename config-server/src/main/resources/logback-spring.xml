@@ -1,4 +1,5 @@
 <configuration>
+    <property name="MICROSERVICE_NAME" value="${spring.application.nam}"/>
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>localhost:5044</destination> <!-- Send logs to Logstash -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
@@ -6,7 +7,7 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [${MICROSERVICE_NAME}] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
