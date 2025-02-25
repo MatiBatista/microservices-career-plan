@@ -1,6 +1,7 @@
 package com.eldar.person_service.dtos.request;
 
 import com.eldar.person_service.utils.RoleEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -43,6 +44,7 @@ public class EmployeeRequestDTO {
     @Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
     private String password;
 
+    @Schema(example = "['USER'','ADMIN']", description = "Employee's role")
     private List<RoleEnum> roles;
 
     public String getRoles(){

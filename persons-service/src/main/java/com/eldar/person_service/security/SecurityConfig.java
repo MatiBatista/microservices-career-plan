@@ -41,6 +41,8 @@ public class SecurityConfig {
         };
         AntPathRequestMatcher[] adminRoutes = new AntPathRequestMatcher[]{
                 new AntPathRequestMatcher("/employees/**", HttpMethod.DELETE),
+                new AntPathRequestMatcher("/employees/**", HttpMethod.PUT),
+                new AntPathRequestMatcher("/employees/**", HttpMethod.POST),
                 new AntPathRequestMatcher("/customers/**", HttpMethod.DELETE)
         };
 

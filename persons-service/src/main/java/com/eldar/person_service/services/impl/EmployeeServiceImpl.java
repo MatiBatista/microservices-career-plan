@@ -103,7 +103,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (e.getEmail().equals(employeeRequestDTO.getEmail()) && !Objects.equals(employee.getEmail(), employeeRequestDTO.getEmail())) {
                 throw new BadRequestException("Email is already in use");
             }
-            if (e.getUsername().equals(employeeRequestDTO.getUsername())&& !Objects.equals(employee.getEmail(), employeeRequestDTO.getEmail())) {
+            if (e.getUsername().equals(employeeRequestDTO.getUsername())&& !Objects.equals(employee.getUsername(), employeeRequestDTO.getUsername())) {
                 throw new BadRequestException("Username is already in use");
             }
         }
