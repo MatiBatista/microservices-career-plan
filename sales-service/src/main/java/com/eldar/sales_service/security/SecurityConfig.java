@@ -38,7 +38,7 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/login-with-oauth/**"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
                 new AntPathRequestMatcher("/v3/api-docs/**"),
-                new AntPathRequestMatcher("/actuator/**")
+                new AntPathRequestMatcher("/**")
         };
 
         AntPathRequestMatcher[] adminRoutes = new AntPathRequestMatcher[]{
