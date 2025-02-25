@@ -22,7 +22,7 @@ services:
     restart: always
     volumes:
       - ./pipeline/:/logstash_dir
-    command: logstash -f /logstash_dir/pipeline/logstash.conf
+    command: logstash -f /logstash_dir/logstash.conf
     depends_on:
       - elasticsearch
     ports:
