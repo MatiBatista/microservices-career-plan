@@ -50,4 +50,4 @@ networks:
     driver: bridge
 
 volumes:
-  elastic_data: {}⏎
+  elastic_data: {}
