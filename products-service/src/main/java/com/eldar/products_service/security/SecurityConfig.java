@@ -59,6 +59,7 @@ public class SecurityConfig {
         jwtTokenFilter.setPublicRoutes(publicRoutes);
         return http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(publicRoutes).permitAll()
                         .requestMatchers(adminRoutes).hasAnyAuthority("ADMIN")
@@ -70,7 +71,6 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                         .accessDeniedHandler(jwtAccessDeniedHandler))
-                .cors(AbstractHttpConfigurer::disable)
                 .build();
     }
 }
