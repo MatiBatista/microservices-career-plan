@@ -30,9 +30,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(description = "Login with user and password.", summary = "Login with user and password")
-    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO userLoginRequestDTO, HttpServletRequest httpServletRequest) throws LoginException {
-        System.out.println(httpServletRequest.getRequestURL());
-        System.out.println(httpServletRequest.getHeader("Referer"));
+    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO userLoginRequestDTO) throws LoginException {
         return new ResponseEntity<>(authService.attemptUserPasswordLogin(userLoginRequestDTO.getUsername(), userLoginRequestDTO.getPassword()), HttpStatus.OK);
     }
 
