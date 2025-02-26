@@ -8,6 +8,7 @@ import com.eldar.person_service.security.service.contracts.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,9 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(description = "Login with user and password.", summary = "Login with user and password")
-    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO userLoginRequestDTO) throws LoginException {
+    public ResponseEntity<LoginResponseDTO> loginUser(@RequestBody LoginRequestDTO userLoginRequestDTO, HttpServletRequest httpServletRequest) throws LoginException {
+        System.out.println(httpServletRequest.getRequestURL());
+        System.out.println(httpServletRequest.getHeader("Referer"));
         return new ResponseEntity<>(authService.attemptUserPasswordLogin(userLoginRequestDTO.getUsername(), userLoginRequestDTO.getPassword()), HttpStatus.OK);
     }
 

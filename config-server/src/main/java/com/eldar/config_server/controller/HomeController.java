@@ -12,8 +12,7 @@ public class HomeController {
 
     @GetMapping
     public String home() {
-        log.info("START - handleException");
-        log.info("END - handleException");
+
         return "Bienvenido al ConfigServer";
 
     }
