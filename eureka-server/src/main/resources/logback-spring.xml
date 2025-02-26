@@ -1,6 +1,6 @@
 <configuration>
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>localhost:5044</destination> <!-- Send logs to Logstash -->
+        <destination>192.168.1.44:5044</destination> <!-- Send logs to Logstash -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
 
