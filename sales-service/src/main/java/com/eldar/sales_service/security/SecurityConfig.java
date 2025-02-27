@@ -38,25 +38,24 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/login-with-oauth/**"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
                 new AntPathRequestMatcher("/v3/api-docs/**"),
-                new AntPathRequestMatcher("/**")
+                new AntPathRequestMatcher("/actuator/**")
         };
 
-        AntPathRequestMatcher[] adminRoutes = new AntPathRequestMatcher[]{
+
+        AntPathRequestMatcher[] userAndAdminRoutes = new AntPathRequestMatcher[]{
+                new AntPathRequestMatcher("/sales/**", HttpMethod.PUT),
+                new AntPathRequestMatcher("/sales/**", HttpMethod.GET),
+                new AntPathRequestMatcher("/sales/**", HttpMethod.POST),
                 new AntPathRequestMatcher("/sales/**", HttpMethod.DELETE)
         };
 
-        AntPathRequestMatcher[] userRoutes = new AntPathRequestMatcher[]{
-                new AntPathRequestMatcher("/sales/**", HttpMethod.PUT),
-                new AntPathRequestMatcher("/sales/**", HttpMethod.GET),
-                new AntPathRequestMatcher("/sales/**", HttpMethod.POST)
-        };
         jwtTokenFilter.setPublicRoutes(publicRoutes);
+
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(publicRoutes).permitAll()
-                        .requestMatchers(adminRoutes).hasAnyAuthority("ADMIN")
-                        .requestMatchers(userRoutes).hasAnyAuthority("ADMIN","USER")
+                        .requestMatchers(userAndAdminRoutes).hasAnyAuthority("ADMIN","USER")
                         .anyRequest().authenticated())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Desactiva sesiones

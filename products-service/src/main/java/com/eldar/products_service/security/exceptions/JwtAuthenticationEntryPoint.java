@@ -28,7 +28,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                 .code(HttpServletResponse.SC_UNAUTHORIZED)
                 .status("Unauthorized")
                 .timestamp(LocalDateTime.now())
-                .message("Authentication failed: " + authException.getMessage())
+                .message("Authentication failed")
                 .path(request.getRequestURI())
                 .build();
 

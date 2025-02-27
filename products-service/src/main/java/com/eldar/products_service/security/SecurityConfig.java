@@ -37,32 +37,29 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/login/**"),
                 new AntPathRequestMatcher("/login-with-oauth/**"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
-                new AntPathRequestMatcher("/**")
-        };
-        AntPathRequestMatcher[] adminRoutes = new AntPathRequestMatcher[]{
-                new AntPathRequestMatcher("/products/**", HttpMethod.DELETE),
-                new AntPathRequestMatcher("/categories/**", HttpMethod.DELETE),
-                new AntPathRequestMatcher("/brands/**", HttpMethod.DELETE)
+                new AntPathRequestMatcher("/actuator/**")
         };
 
-        AntPathRequestMatcher[] userRoutes = new AntPathRequestMatcher[]{
+        AntPathRequestMatcher[] userAndAdminRoutes = new AntPathRequestMatcher[]{
                 new AntPathRequestMatcher("/products/**", HttpMethod.PUT),
                 new AntPathRequestMatcher("/products/**", HttpMethod.GET),
                 new AntPathRequestMatcher("/products/**", HttpMethod.POST),
+                new AntPathRequestMatcher("/products/**", HttpMethod.DELETE),
                 new AntPathRequestMatcher("/categories/**", HttpMethod.PUT),
                 new AntPathRequestMatcher("/categories/**", HttpMethod.GET),
                 new AntPathRequestMatcher("/categories/**", HttpMethod.POST),
+                new AntPathRequestMatcher("/categories/**", HttpMethod.DELETE),
                 new AntPathRequestMatcher("/brands/**", HttpMethod.PUT),
                 new AntPathRequestMatcher("/brands/**", HttpMethod.GET),
-                new AntPathRequestMatcher("/brands/**", HttpMethod.POST)
+                new AntPathRequestMatcher("/brands/**", HttpMethod.POST),
+                new AntPathRequestMatcher("/brands/**", HttpMethod.DELETE)
         };
         jwtTokenFilter.setPublicRoutes(publicRoutes);
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(publicRoutes).permitAll()
-                        .requestMatchers(adminRoutes).hasAnyAuthority("ADMIN")
-                        .requestMatchers(userRoutes).hasAnyAuthority("ADMIN","USER")
+                        .requestMatchers(userAndAdminRoutes).hasAnyAuthority("ADMIN","USER")
                         .anyRequest().authenticated())
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Desactiva sesiones
