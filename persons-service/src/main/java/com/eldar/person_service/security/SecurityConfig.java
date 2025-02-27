@@ -38,23 +38,28 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/login-with-oauth/**"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
                 new AntPathRequestMatcher("/v3/api-docs/**"),
-                new AntPathRequestMatcher("/**")
+                new AntPathRequestMatcher("/actuator/*")
         };
         AntPathRequestMatcher[] adminRoutes = new AntPathRequestMatcher[]{
                 new AntPathRequestMatcher("/employees/**", HttpMethod.DELETE),
                 new AntPathRequestMatcher("/employees/**", HttpMethod.PUT),
                 new AntPathRequestMatcher("/employees/**", HttpMethod.POST),
-                new AntPathRequestMatcher("/customers/**", HttpMethod.DELETE)
+                new AntPathRequestMatcher("/employees/**", HttpMethod.GET),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.GET),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.POST),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.DELETE),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.PUT)
         };
 
         AntPathRequestMatcher[] userRoutes = new AntPathRequestMatcher[]{
-                new AntPathRequestMatcher("/employees/**", HttpMethod.PUT),
                 new AntPathRequestMatcher("/employees/**", HttpMethod.GET),
-                new AntPathRequestMatcher("/employees/**", HttpMethod.POST),
                 new AntPathRequestMatcher("/customers/**", HttpMethod.PUT),
                 new AntPathRequestMatcher("/customers/**", HttpMethod.GET),
-                new AntPathRequestMatcher("/customers/**", HttpMethod.POST)
+                new AntPathRequestMatcher("/customers/**", HttpMethod.POST),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.DELETE),
+                new AntPathRequestMatcher("/customers/**", HttpMethod.PUT)
         };
+
         jwtTokenFilter.setPublicRoutes(publicRoutes);
         return http
                 .csrf(AbstractHttpConfigurer::disable)
