@@ -44,11 +44,6 @@ public class SecurityConfig {
                 new AntPathRequestMatcher("/employees/**", HttpMethod.DELETE),
                 new AntPathRequestMatcher("/employees/**", HttpMethod.PUT),
                 new AntPathRequestMatcher("/employees/**", HttpMethod.POST),
-                new AntPathRequestMatcher("/employees/**", HttpMethod.GET),
-                new AntPathRequestMatcher("/customers/**", HttpMethod.GET),
-                new AntPathRequestMatcher("/customers/**", HttpMethod.POST),
-                new AntPathRequestMatcher("/customers/**", HttpMethod.DELETE),
-                new AntPathRequestMatcher("/customers/**", HttpMethod.PUT)
         };
 
         AntPathRequestMatcher[] userRoutes = new AntPathRequestMatcher[]{
