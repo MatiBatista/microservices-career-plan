@@ -33,12 +33,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         AntPathRequestMatcher[] publicRoutes = new AntPathRequestMatcher[] {
-                new AntPathRequestMatcher("/oauth2/**"),
-                new AntPathRequestMatcher("/login/**"),
-                new AntPathRequestMatcher("/login-with-oauth/**"),
                 new AntPathRequestMatcher("/swagger-ui/**"),
-                new AntPathRequestMatcher("/v3/api-docs/**"),
-                new AntPathRequestMatcher("/actuator/**")
+                new AntPathRequestMatcher("/actuator/**"),
+                new AntPathRequestMatcher("/v3/api-docs/**")
         };
 
 
