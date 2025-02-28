@@ -1,4 +1,6 @@
 <configuration>
+    <springProperty scope="context" name="serviceName" source="service.name" defaultValue="eureka-service"/>
+
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>localhost:5044</destination> <!-- Send logs to Logstash -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
@@ -13,7 +15,6 @@
 
 
     <root level="INFO">
-        <appender-ref ref="LOGSTASH" />
         <appender-ref ref="CONSOLE" />
     </root>
 </configuration>
