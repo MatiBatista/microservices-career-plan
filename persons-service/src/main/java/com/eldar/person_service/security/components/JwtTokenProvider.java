@@ -32,7 +32,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .claims(generateClaims(employee))
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expirationMs))
+                .expiration(new Date(System.currentTimeMillis() + 360000))
                 .signWith(key)
                 .compact();
     }
