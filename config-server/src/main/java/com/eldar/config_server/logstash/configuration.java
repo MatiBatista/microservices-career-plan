@@ -45,6 +45,7 @@ public class configuration {
 
             LogstashEncoder logstashEncoder = new LogstashEncoder();
             logstashEncoder.setContext(context);
+            logstashEncoder.addCustomField("serviceName", serviceName);
             logstashEncoder.start();
             logstashAppender.setEncoder(logstashEncoder);
             logstashAppender.start();
