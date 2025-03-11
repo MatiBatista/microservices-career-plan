@@ -41,10 +41,11 @@ public class configuration {
             logstashAppender.setContext(context);
             logstashAppender.setName("LOGSTASH");
 
-            logstashAppender.addDestination("localhost:5044"); // Dirección de Logstash
+            logstashAppender.addDestination("192.168.1.44:5044"); // Dirección de Logstash
 
             LogstashEncoder logstashEncoder = new LogstashEncoder();
             logstashEncoder.setContext(context);
+            logstashEncoder.setCustomFields("{\"serviceName\": \"" + serviceName + "\"}");
             logstashEncoder.start();
             logstashAppender.setEncoder(logstashEncoder);
             logstashAppender.start();
