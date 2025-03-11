@@ -23,8 +23,8 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    @Value("${jwt.expiration}")
-    private Long expirationMs;
+    //@Value("${jwt.expiration}")
+    //private Long expirationMs;
 
 
     public String generateToken(Employee employee) {
