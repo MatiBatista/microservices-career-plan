@@ -3,7 +3,7 @@
         <destination>192.168.1.44:5044</destination> <!-- Send logs to Logstash -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
-    <springProperty scope="context" name="serviceName" source="service.name" defaultValue="config-service"/>
+    <springProperty scope="context" name="serviceName" source="service.name" defaultValue="config-server"/>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - [${serviceName}] - %msg%n</pattern>
